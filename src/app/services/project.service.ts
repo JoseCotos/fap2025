@@ -30,5 +30,16 @@ export class ProjectService {
     return this.http.get("https://yerwug2msl.execute-api.us-east-1.amazonaws.com/v1fap/fap_medico_disponibilidad_hora_get?id_medico=" + idMedico + "&fecha=" + fecha, {responseType: "json"})
   }
 
+  insertar_cita_medica(data: any){
+    return this.http.post("https://yerwug2msl.execute-api.us-east-1.amazonaws.com/v1fap/fap_cita_post", data, {responseType: "json"})
+  }
+
+/*   insertar_cita_medica22(data: any) {
+  return this.http.post('https://yerwug2msl.execute-api.us-east-1.amazonaws.com/v1fap/fap_cita_post', data, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }); 
+} */
 
 }

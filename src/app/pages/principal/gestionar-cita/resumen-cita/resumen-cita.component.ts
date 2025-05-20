@@ -2,7 +2,8 @@ import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink, RouterModule, Router } from '@angular/router';
-import { CITA } from '../../../../constantes';
+import { CITA, ESTADO_CITA, LOGIN } from '../../../../constantes';
+import { ProjectService } from '../../../../services/project.service';
 
 
 @Component({
@@ -16,12 +17,14 @@ export class ResumenCitaComponent {
   nomEspecialidad: string = '';
   disponibleFecha: string = '';
   disponibleHora: string = '';
+  
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
-  ){}
-
+    private router: Router,
+    private readonly ps: ProjectService    
+  ){ }
+ 
   ngOnInit(): void {
     const nMed = sessionStorage.getItem(CITA.NOMBRE_MEDICO);
     const nEsp = sessionStorage.getItem(CITA.NOMBRE_ESPECIALIDAD);
@@ -40,7 +43,6 @@ export class ResumenCitaComponent {
     tipoDoc: ["", [Validators.required]]
   })
   
- 
   btnAtraz(){
     if(this.seleccionarEspecialidadForm.valid)
       console.log(this.seleccionarEspecialidadForm.value)
@@ -48,11 +50,26 @@ export class ResumenCitaComponent {
       this.router.navigate(['/seleccionar-especialidad']);
   }
 
-  btnContinuar(){
-    if(this.seleccionarEspecialidadForm.valid)
-      console.log(this.seleccionarEspecialidadForm.value)
-    else
-      this.router.navigate(['/mensaje-confirmacion-cita']);
+  __insertar_cita_medica(data: any){
+    this.ps.insertar_cita_medica(data).subscribe((rest: any) => {
+      console.log(data);
+      console.log(rest);
+    this.router.navigate(['/mensaje-confirmacion-cita']);
+    })
   }
+
+  btnContinuar(){
+    this.__insertar_cita_medica(this.citaMedica);
+  }
+
+citaMedica: any = {
+    id_cita : "0",
+    id_paciente : sessionStorage.getItem(LOGIN.ID_PACIENTE),
+    id_medico : sessionStorage.getItem(CITA.ID_MEDICO),
+    fecha : sessionStorage.getItem(CITA.FECHA),
+    hora : sessionStorage.getItem(CITA.HORA),
+    estado : 'RESERVADO',
+    motivo : '.'    
+  };
 
 }

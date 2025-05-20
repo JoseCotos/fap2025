@@ -248,12 +248,12 @@ def lambda_handler(event,context):
         fecha = event.get('fecha')
         hora = event.get('hora')
         estado = event.get('estado')
-        motivo_consulta = event.get('motivo_consulta')
+        motivo = event.get('motivo')
 
-        params = (id_cita, id_paciente, id_medico, fecha, hora, estado, motivo_consulta)
+        params = (id_cita, id_paciente, id_medico, fecha, hora, estado, motivo)
 
-        cursor.execute('exec usp_insertar_cita @ID_CITA=?, @ID_PACIENTE=?, @ID_MEDICO=?, @FECHA=?, @HORA=?, @ESTADO=?, @MOTIVO_CONSULTA=?',params)
-
+        cursor.execute('exec usp_insertar_cita @ID_CITA=?, @ID_PACIENTE=?, @ID_MEDICO=?, @FECHA=?, @HORA=?, @ESTADO=?, @MOTIVO=?',params)
+        conn.commit()
 
         return {
             'msg': 'Registro creado correctamente'
@@ -266,4 +266,19 @@ def lambda_handler(event,context):
     finally:
         cursor.close()
         conn.close()
+
+""" 
+    Recursos -> /especialidad -> Get -> Solicitud de integración -> Editar
+
+    En plantilla de asignación colocar: application/json
+{
+    "id_cita": "$input.params('id_cita')",
+    "id_paciente": "$input.params('id_paciente')",
+    "id_medico": "$input.params('id_medico')",
+    "fecha": "$input.params('fecha')",
+    "hora": "$input.params('hora')",
+    "estado": "$input.params('estado')",
+    "motivo": "$input.params('motivo')"
+}
+"""
 
