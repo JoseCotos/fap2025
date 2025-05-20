@@ -1,0 +1,61 @@
+
+
+<section id="portfolio">
+    <div class="container" style="margin-top: 50px;">
+        <div class="row justify-content-center" style="margin-bottom: -15px;">
+            <div style="width: 80%; ">
+                <form [formGroup]="gestionarCitaForm">
+                    <div class="row">
+                        <div class="col-md-12" style="font-weight: bold;" id="saludo"> Hola {{ nombreUsuario }} ! </div>
+                        <div class="col-md-12"> Estamos aqui para cuidarte </div>
+                    </div>
+                    <br />
+
+                    <!-- Opciones de seleccion de Gestión de Citas  -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="radio" class="btn-check"  name="tipoGestionCita" id="optReservaCita" (click)="getTipoGestion($event)" autocomplete="off">
+                                <label class="btn" for="optReservaCita"> Reserva tu cita </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="radio" class="btn-check"  name="tipoGestionCita" id="optCancelacionCita" (click)="getTipoGestionC()" autocomplete="off">
+                                <label class="btn text-danger" for="optCancelacionCita"> Cancelación de cita </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Seleccion del tipo de cita -->
+                    <div class="row">
+                        <div class="col-md-12" style="font-weight: bold;">Tipo de cita</div>
+                        <select class="form-control form-select col-md-4" formControlName="tipoCita" (change)="getTipoCita($event)" >
+                                <option value="Presencial" >Presencial</option>
+                                <option value="Virtual">Virtual</option>
+                        </select>
+                        <div class="col-md-8"></div>
+                    </div>
+
+                    <!-- Opciones para seleccionar el tipo de cita  -->
+                    <div class="row">
+                        <div class="col-md-4 portfolio-item text-center" style="padding: 5px;">
+                            <a routerLink="/reservar-medico"><img class="img-fluid" src="assets/img/fap/medico.png"></a>
+                            <button class="text-center btn btn-outline-primary" (click)="seleccionarMedico()">Médico</button>
+                        </div>
+                        <div class="col-md-4 portfolio-item text-center" style="padding: 5px;">
+                            <a routerLink="/seleccionar-especialidad"><img class="img-fluid" src="assets/img/fap/especialidad.png"></a>
+                            <button class="text-center btn btn-outline-primary" (click)="seleccionarEspecialidad()">Especialidad</button>
+                        </div>
+                        <div class="col-md-4 portfolio-item text-center" style="padding: 5px;">
+                            <a routerLink="/reservar-laboratorio"><img class="img-fluid" src="assets/img/fap/laboratorio.png"></a>
+                            <button class="text-center btn btn-outline-primary" (click)="seleccionarLaboratorio()">Laboratorio</button>
+                        </div>
+                    </div>
+                    
+                </form>
+                              
+            </div>
+        </div>
+    </div>
+</section>

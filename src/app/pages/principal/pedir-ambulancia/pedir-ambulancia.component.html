@@ -1,0 +1,57 @@
+<div *ngIf="mostrarModal" style="
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+">
+  <div style="
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+  ">
+    <span (click)="cerrarModal()" style="
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #aaa;
+      cursor: pointer;
+    ">&times;</span>
+
+    <h2 style="color: #e74c3c; margin-bottom: 20px;">Servicio de Ambulancia</h2>
+    <p>Para solicitar el servicio por favor comunícate al:</p>
+    <p style="font-weight: bold; font-size: 1.2rem;">(01) 513 5300 opción 4 </p>
+    <p>* Recuerde que este servicio es sólo para emergencias.</p>
+    <p>Sujeto a disponibilidad de cobertura.</p>
+
+    <button (click)="cerrarModal()" style="
+  background-color: #fcd34d;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 12px 25px;
+  font-size: 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background-color 0.3s ease;
+"
+onmouseover="this.style.backgroundColor='#fbbf24'"
+onmouseout="this.style.backgroundColor='#fcd34d'">
+  ENTENDIDO
+</button>
+
+  </div>
+</div>

@@ -1,0 +1,110 @@
+<nav class="navbar navbar-dark navbar-expand-lg fixed-top" id="mainNav" style="background-color: rgba(52,58,64,0.75);">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/login" style="color: rgb(255,165,85);">FAP</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+      data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+      aria-label="Toggle navigation" style="background-color: rgb(255,165,85);">
+      <i class="fa fa-bars" style="color: rgba(255,255,255,0.75);"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="nav navbar-nav ml-auto text-uppercase">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login" style="color: rgb(255,165,85);">Inicio de Sesión</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section id="portfolio">
+  <div class="container" style="margin-top: 50px;">
+    <div class="row justify-content-center" style="margin-bottom: -15px;">
+      <div style="width: 95%;">
+        <div class="row text-center">
+          <div class="col-md-5">
+            <img src="assets/img/fap/logo_principal_grande.png" style="height: 320px;">
+          </div>
+
+          <div class="col-md-7" style="padding: 10px;border-radius: 4px;box-shadow: 1px 1px 2px 1px;height: auto;">
+            <p class="text-center fw-bold">INGRESO AL SISTEMA (SIGNO)</p>
+
+            <!-- Mensaje de cuenta bloqueada -->
+            <div *ngIf="cuentaBloqueada" class="alert alert-danger text-center fw-bold">
+              Tu cuenta ha sido bloqueada. Contacta al equipo de soporte para desbloquearla.
+            </div>
+
+            <form [formGroup]="loginForm">
+              <!-- Tipo de documento -->
+              <div class="form-group">
+                <div class="input-group mb-1">
+                  <span class="input-group-text" style="width: 35%;">Tipo de documento: </span>
+                  <div class="form-floating" style="width: 65%;">
+                    <select class="form-control form-select" formControlName="tipo_documento">
+                      <option value="DNI">DNI</option>
+                      <option value="CE">Carnet Extranjería</option>
+                      <option value="PASS">Pasaporte</option>
+                    </select>
+                    <small class="form-text text-danger" *ngIf="TipoDocInvalido">
+                      *El tipo de documento es requerido
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Número de documento -->
+              <div class="form-group">
+                <div class="input-group mb-1">
+                  <span class="input-group-text" style="width: 35%;">Número de documento: </span>
+                  <div class="form-floating" style="width: 65%;">
+                    <input class="form-control"
+                           type="text"
+                           formControlName="numero_documento"
+                           maxlength="8"
+                           pattern="[0-9]*"
+                           inputmode="numeric"
+                           autocomplete="off" />
+                    <small class="form-text text-danger" *ngIf="NroDocInvalido">
+                      *Debe tener exactamente 8 dígitos numéricos
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Contraseña -->
+              <div class="form-group">
+                <div class="input-group mb-1">
+                  <span class="input-group-text" style="width: 35%;">Contraseña: </span>
+                  <div class="form-floating" style="width: 65%;">
+                   <input class="form-control"
+       type="password"
+       formControlName="clave_hash"
+       maxlength="20"
+       autocomplete="off">
+<small class="form-text text-danger" *ngIf="PwdInvalido">
+  *Debe contener exactamente 6 dígitos numéricos
+</small>
+
+                  </div>
+                </div>
+              </div>
+
+              <!-- Botón Ingresar -->
+              <div class="form-group text-center">
+                <button (click)="submit()" class="btn btn-primary" type="submit" style="width: 30%;" [disabled]="cuentaBloqueada">
+                  Ingresar
+                </button>
+              </div>
+            </form>
+
+            <div class="row text-center mt-3">
+              <div class="col-md-12">
+                <a class="nav-link js-scroll-trigger" routerLink="/recuperar-password">He olvidado la contraseña</a>
+              </div>
+            </div>
+
+          </div> <!-- fin .col-md-7 -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

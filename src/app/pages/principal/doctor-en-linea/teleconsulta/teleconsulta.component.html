@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teleconsulta</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom CSS for the page - Stepper and Form Styling */
+        body {
+            font-family: 'Inter', sans-serif; /* Apply the Inter font to the body */
+        }
+        .stepper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2.5rem; /* 40px in rem */
+            margin-bottom: 1.5rem; /* Add margin below the stepper */
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .circle {
+            background-color: #f1c40f; /* Yellow background */
+            color: white;
+            font-weight: bold;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem; /* 16px in rem */
+            z-index: 2; /* Ensure circle is above the line */
+        }
+
+        .step span {
+            margin-top: 0.5rem; /* 8px in rem */
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.875rem; /* 14px in rem */
+        }
+
+        .line {
+            width: 50px;
+            height: 3px;
+            background-color: #f1c40f; /* Yellow line */
+            margin: 0 0.9375rem; /* 15px in rem */
+            position: relative; /* Allows for absolute positioning of pseudo-elements */
+        }
+        .line::before,
+        .line::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 3px;
+            background-color: #d1d5db; /* Gray for inactive */
+            transition: width 0.3s ease-in-out; /* Smooth transition */
+        }
+
+        .line::before {
+            left: 0;
+            right: 50%;
+        }
+
+        .line::after{
+            right: 0;
+            left: 50%;
+        }
+
+        .step.active .circle {
+            background-color: #f1c40f; /* Yellow for active step */
+        }
+
+        .step.active span {
+            color: #2c3e50;
+        }
+
+        .step.completed .circle {
+            background-color: #2ecc71; /* Green for completed step */
+        }
+
+        .step.completed span {
+            color: #2c3e50;
+        }
+
+        .step.active ~ .step .circle {
+            background-color: #d1d5db; /* Gray for future steps */
+            color: #6b7280;
+        }
+
+        .step.active ~ .step span {
+            color: #6b7280;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 1rem;
+        }
+
+        .form-container {
+            margin-top: 1.5rem; /* 24px in rem */
+        }
+
+        .form-title {
+            font-size: 1.5rem; /* 24px in rem */
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 1rem; /* 16px in rem */
+            color: #2c3e50;
+        }
+
+        .info-message {
+            background-color: #fff8db; /* Light yellow background */
+            color: #856404;     /* Dark yellow text */
+            border: 1px solid #ffeeba; /* Yellow border */
+            padding: 1rem;       /* 16px in rem */
+            border-radius: 0.375rem; /* rounded in rem */
+            margin-bottom: 1.5rem; /* 24px in rem */
+            font-size: 0.875rem; /* 14px in rem */
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem; /* 24px in rem */
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.25rem; /* 4px in rem */
+            color: #34495e;
+            font-size: 0.875rem; /* 14px in rem */
+        }
+
+        .form-input {
+            border: 1px solid #d1d5db; /* Gray border */
+            border-radius: 0.375rem; /* rounded in rem */
+            padding: 0.5rem 0.75rem; /* py-2 px-3 in rem */
+            width: 100%;
+            font-size: 0.875rem; /* 14px in rem */
+            box-sizing: border-box; /* Ensure padding doesn't affect width */
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #f1c40f; /* Yellow focus border */
+            box-shadow: 0 0 0 3px rgba(241, 196, 15, 0.2); /* Yellow focus shadow */
+        }
+
+        .симптомы-link {
+            color: #d4ac0d; /* Darker yellow text */
+            font-weight: 600;
+            text-decoration: underline;
+            font-size: 0.875rem; /* 14px in rem */
+            cursor: pointer;
+        }
+
+        .radio-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem; /* gap-4 in rem */
+        }
+
+        .radio-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem; /* gap-2 in rem */
+            font-size: 0.875rem; /* 14px in rem */
+            color: #34495e;
+        }
+
+        .radio-input {
+            margin-right: 0.25rem; /* mr-2 in rem */
+        }
+
+        .terms-label {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 1.5rem; /* mt-6 in rem */
+            font-size: 0.875rem; /* 14px in rem */
+            color: #34495e;
+        }
+
+        .terms-checkbox {
+            margin-right: 0.5rem; /* mr-2 in rem */
+            accent-color: #f1c40f; /* Yellow checkbox accent */
+        }
+
+        .terms-link {
+            color: #d4ac0d; /* Darker yellow text */
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .submit-button {
+            background-color: #f1c40f; /* Yellow background */
+            color: white;
+            font-weight: bold;
+            padding: 0.5rem 1.5rem; /* py-2 px-6 in rem */
+            border-radius: 0.375rem; /* rounded in rem */
+            transition: background-color 0.2s ease-in-out; /* Smooth transition */
+            cursor: pointer;
+            margin-top: 1.5rem; /* mt-6 in rem */
+            width: 100%;
+            display: block;
+            text-align: center;
+            font-size: 0.875rem; /* 14px in rem */
+        }
+
+        .submit-button:hover {
+            background-color: #e08e0b; /* Darker yellow on hover */
+        }
+
+        .submit-button:disabled {
+            opacity: 0.4;     /* 40% opacity when disabled */
+            cursor: not-allowed;
+        }
+        .question-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+            color: #34495e;
+            font-size: 0.875rem;
+        }
+
+        .question-details {
+            color: #7f8c8d;
+            font-size: 0.75rem;
+            margin-bottom: 0.25rem;
+        }
+
+        #patient-name-input {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        #patient-name-input input {
+            flex: 1;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            margin-right: 0;
+        }
+
+        #patient-name-input button {
+            background-color: #f1c40f;
+            color: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.375rem;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            border: none;
+            display: none; /* Hide the button */
+        }
+
+        #patient-name-input button:hover {
+            background-color: #e08e0b;
+        }
+
+        .select-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .select-container select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            background-color: white;
+            color: #34495e;
+            box-sizing: border-box;
+        }
+
+        .select-container select:focus {
+            outline: none;
+            border-color: #f1c40f;
+            box-shadow: 0 0 0 3px rgba(241, 196, 15, 0.2);
+        }
+
+        .select-container::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 0.75rem;
+            transform: translateY(-50%);
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid #34495e;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container">
+        <div class="stepper">
+            <div class="step active">
+                <div class="circle">1</div>
+                <span>Paciente</span>
+            </div>
+            <div class="line"></div>
+            <div class="step">
+                <div class="circle">2</div>
+                <span>Fecha y hora</span>
+            </div>
+            <div class="line"></div>
+            <div class="step">
+                <div class="circle">3</div>
+                <span>Confirmar</span>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <h2 class="form-title">Ingresa los datos para tu atención</h2>
+
+            <div class="info-message">
+                El servicio ofrece teleconsultas para síntomas leves. No sustituye la atención médica presencial si es necesaria.
+            </div>
+
+            <form class="space-y-6 text-sm" id="teleconsulta-form">
+                <div class="form-group">
+                    <label for="patient-name" class="form-label">¿Para quién es la cita?</label>
+                    <div id="patient-name-input">
+                        <input type="text" id="dni-input" placeholder="Ingrese el DNI del paciente" class="form-input" />
+                        <button type="button" id="search-patient-button">Buscar</button>
+                    </div>
+                    <input type="text" id="patient-name" placeholder="Nombre del paciente" class="form-input"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">¿Qué síntomas tiene el paciente?</label>
+                    <div class="select-container">
+                        <select id="symptoms-dropdown">
+                            <option value="" disabled selected>Seleccione un síntoma</option>
+                            <option value="dolor_garganta">Dolor de garganta</option>
+                            <option value="fiebre">Fiebre</option>
+                            <option value="tos">Tos</option>
+                            <option value="congestion_nasal">Congestión nasal</option>
+                            <option value="dolor_cabeza">Dolor de cabeza</option>
+                            <option value="malestar_general">Malestar general/dolor corporal</option>
+                            <option value="contacto_covid">Contacto COVID-19</option>
+                            <option value="diarrea">Diarrea</option>
+                            <option value="covid_confirmado">COVID-19 Confirmado</option>
+                             <option value="estrenimiento">Estreñimiento</option>
+                            <option value="nauseas_vomitos">Náuseas y/o vómitos</option>
+                            <option value="mala_digestion">Mala digestión</option>
+                            <option value="acidez_estomacal">Acidez/Ardor estomacal</option>
+                            <option value="ardor_orinar">Ardor al orinar</option>
+                            <option value="contractura_muscular">Contractura muscular</option>
+                            <option value="dolor_espalda">Dolor de espalda</option>
+                            <option value="dolor_cuello">Dolor de cuello</option>
+                            <option value="golpes_leves">Golpes leves</option>
+                            <option value="ronchas">Ronchas</option>
+                            <option value="heridas_leves">Heridas leves en la piel</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="question-label">¿Quieres contarnos algo más de tus síntomas?</label>
+                            <div class="radio-group">
+                                <label class="radio-label"><input type="radio" name="p1" value="si" class="radio-input" /> Sí</label>
+                                <label class="radio-label"><input type="radio" name="p1" value="no" class="radio-input" /> No</label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="question-label">¿Tiene alguna alergia que desea informar?</label>
+                            <div class="radio-group">
+                                <label class="radio-label"><input type="radio" name="p2" value="si" class="radio-input" /> Sí</label>
+                                <label class="radio-label"><input type="radio" name="p2" value="no" class="radio-input" /> No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div>
+                            <label class="question-label">¿Se encuentra tomando alguna medicación?</label>
+                            <div class="question-details">Cuéntanos si el paciente está tomando algún tipo de medicación para tenerlo en cuenta.</div>
+                            <div class="radio-group">
+                                <label class="radio-label"><input type="radio" name="p3" value="si" class="radio-input" /> Sí</label>
+                                <label class="radio-label"><input type="radio" name="p3" value="no" class="radio-input" /> No</label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="question-label">¿Ha recibido atención médica o tratamiento en las últimas 24 hs?</label>
+                            <div class="radio-group">
+                                <label class="radio-label"><input type="radio" name="p4" value="si" class="radio-input" /> Sí</label>
+                                <label class="radio-label"><input type="radio" name="p4" value="no" class="radio-input" /> No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="terms-label">
+                        <input type="checkbox" id="accept-terms" name="terminos" class="terms-checkbox">
+                        Acepto los <a href="#" class="terms-link">Términos y condiciones</a>.
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="submit-button" id="submit-btn">
+                        Aceptar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const submitButton = document.getElementById('submit-btn');
+        const form = document.getElementById('teleconsulta-form');
+        const steps = document.querySelectorAll('.step');
+        const lines = document.querySelectorAll('.line');
+        let currentStep = 0;
+
+        const dniInput = document.getElementById('dni-input');
+        const searchPatientButton = document.getElementById('search-patient-button');
+        const patientNameInput = document.getElementById('patient-name');
+        const symptomsDropdown = document.getElementById('symptoms-dropdown');
+        const acceptTermsCheckbox = document.getElementById('accept-terms');
+
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Simulate validation
+            let isValid = true;
+            if (!patientNameInput.value.trim()) {
+                isValid = false;
+                alert('Por favor, ingrese el nombre del paciente.');
+            }
+             if (dniInput.value.trim().length !== 8) {
+                isValid = false;
+                alert('Por favor, ingrese un DNI válido de 8 dígitos.');
+            }
+            if (!symptomsDropdown.value) {
+                isValid = false;
+                alert('Por favor, seleccione un síntoma.');
+            }
+
+            if (!acceptTermsCheckbox.checked) {
+                isValid = false;
+                alert('Por favor, acepte los términos y condiciones.');
+            }
+
+            // Update step
+            if (isValid) {
+                markStepCompleted(currentStep);
+                currentStep++;
+                updateActiveStep(currentStep);
+                 if (currentStep < steps.length -1) {
+                    // Simulate moving to the next section of the form.
+                    // In a real application, you would show the next part of the form.
+                    console.log(`Moving to step ${currentStep + 1}`);
+                    alert('Por favor, seleccione la fecha y hora para su consulta.');
+                } else {
+                    // Redireccionar a la nueva página
+                    window.location.href = 'cita_confirmada.html'; // Reemplaza con la URL deseada
+                    console.log('Form submitted and redirecting...');
+                }
+            }
+        });
+
+        function updateActiveStep(step) {
+            steps.forEach((s, index) => {
+                s.classList.remove('active');
+                s.classList.remove('completed');
+                if (index < step) {
+                    s.classList.add('completed');
+                } else if (index === step) {
+                    s.classList.add('active');
+                }
+            });
+            // Animate the line
+            lines.forEach((line, index) => {
+                if (index < step) {
+                    line.classList.add('active'); // You can add a class to trigger the animation
+                    line.style.setProperty('--progress', '100%'); // set progress
+                    if(index < step -1){
+                        line.before.style.width = '100%';
+                        line.after.style.width = '100%';
+                    }
+                    else{
+                        line.before.style.width = '0%';
+                        line.after.style.width = '100%';
+                    }
+
+                } else {
+                    line.classList.remove('active');
+                    line.style.setProperty('--progress', '0%');
+                    line.before.style.width = '0%';
+                    line.after.style.width = '0%';
+                }
+            });
+        }
+        function markStepCompleted(step) {
+            steps[step].classList.add('completed');
+            steps[step].classList.remove('active');
+            lines[step-1].before.style.width = '100%';
+            lines[step-1].after.style.width = '100%';
+        }
+
+    </script>
+</body>
+</html>

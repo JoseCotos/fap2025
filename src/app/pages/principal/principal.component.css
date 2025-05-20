@@ -1,0 +1,31 @@
+
+
+.card-container {
+  display: flex; /* Usamos flexbox para controlar el espaciado */
+  flex-wrap: wrap; /* Permitimos que las tarjetas pasen a la siguiente línea en pantallas pequeñas */
+  margin-left: -10px; /* Ajuste para el espaciado izquierdo */
+  margin-right: -10px; /* Ajuste para el espaciado derecho */
+}
+
+.card-wrapper {
+  padding-left: 10px; /* Espacio izquierdo alrededor de cada tarjeta */
+  padding-right: 10px; /* Espacio derecho alrededor de cada tarjeta */
+  margin-bottom: 15px; /* Espacio inferior entre las tarjetas */
+  width: calc(50% - 20px); /* Ancho para dos tarjetas por fila, restando el padding */
+  box-sizing: border-box; /* Incluye el padding en el ancho */
+}
+
+/* Para pantallas más pequeñas, mostrar una tarjeta por fila */
+@media (max-width: 767px) {
+  .card-wrapper {
+    width: 100%;
+  }
+}
+
+.card {
+  /* Elimina el margin-bottom que tenías antes aquí si lo habías puesto */
+}
+
+.card-body {
+  padding: 1.5rem; /* Ajusta el relleno dentro de la tarjeta si es necesario */
+}

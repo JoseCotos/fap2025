@@ -1,0 +1,62 @@
+
+
+<section id="portfolio">
+    <div class="container" style="margin-top: 50px;">
+        <div class="row text-center" style="margin-bottom: -15px;">
+            <div style="width: 100%; ">
+                <form [formGroup]="reservaMedicoForm">
+                    
+                    <!-- opciones de progreso -->
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <img src="assets/img/fap/opc-1.png" style="width: 30%;">
+                        </div>
+                    </div>
+                    <br />
+
+                    <!-- Opciones de búsqueda -->
+                    <div class="row text-center">
+                        <div class="col-md-12" style="font-weight: bold;"> &lt; Reservar por médico  </div> <br /><br />
+                        <div class="col-md-6 col offset-md-3">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" formControlName="txtMedico" placeholder="Ingrese nombre del médico">
+                                <div class="input-group-append">
+                                  <span class="input-group-text" id="basic-addon2"> <a routerLink="/reservar-medico"> Buscar </a></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <br />
+
+                    <!-- Seleccion médicos disponibles -->
+                    <div class="row text-center">
+                        <div class="col-md-12" style="font-weight: bold;">Médicos disponibles</div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-md-4 offset-md-4">
+                            <select class="form-control form-select" formControlName="selMedico" (change)="getMedico($event)">
+                                <option *ngFor="let p of medicos" value="{{ p.id_medico }}">{{ p.nombre }} {{ p.apellido }} </option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+
+                    <!--   -->
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4 form-group text-center">
+                            <button (click)="btnAtraz()" class="btn btn-primary" type="submit" style="width: 50%;"> &lt;Atraz </button>
+                        </div>
+                        <div class="col-md-4 form-group text-center">
+                            <button (click)="btnContinuar()" class="btn btn-primary" type="submit" style="width: 50%;"> Continuar </button>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    
+                </form>
+                              
+            </div>
+        </div>
+    </div>
+</section>

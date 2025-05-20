@@ -1,0 +1,31 @@
+<!--<nav class="navbar navbar-dark navbar-expand-lg fixed-top" id="mainNav" style="background-color: rgba(52,58,64,0.75);">
+    <div class="container"><a class="navbar-brand" routerLink="/login" style="color: rgb(255,165,85);">FAP</a><button class="navbar-toggler navbar-toggler-right" data-toggle="collapse" data-target="#navbarResponsive" type="button" data-toogle="collapse" aria-controls="navbarResponsive"
+            aria-expanded="false" aria-label="Toggle navigation" style="background-color: rgb(255,165,85);"><i class="fa fa-bars" style="color: rgba(255,255,255,0.75);"></i></button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="nav navbar-nav ml-auto text-uppercase">
+                <li class="nav-item" role="presentation"><a class="nav-link js-scroll-trigger" routerLink="/historial-clinico" style="color: rgb(255,165,85);">Historial clínico</a></li> 
+                <li class="nav-item" role="presentation"><a class="nav-link js-scroll-trigger" routerLink="/gestionar-cita" style="color: rgb(255,165,85);">Gestión de citas</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link js-scroll-trigger" routerLink="/usuario" style="color: rgb(255,165,85);">Usuario</a></li>
+                
+            </ul>
+        </div>
+    </div>
+</nav> -->
+<div class="d-flex">
+ 
+  <div class="container mt-4 ms-4">
+    <h2>¡Hola, {{ nombreUsuario }}!</h2>
+    <p>El Hospital Central FAP te cuida</p>
+    <div class="mt-4 card-container">
+      <div class="card-wrapper" *ngFor="let card of dashboardCards">
+        <div class="card text-white" [ngStyle]="{ 'background-color': card.color }">
+          <div class="card-body">
+            <h5 class="card-title fw-bold">{{ card.title }}</h5>
+            <p>{{ card.description }}</p>
+            <a class="btn btn-light fw-bold" [routerLink]="card.route">{{ card.buttonText }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

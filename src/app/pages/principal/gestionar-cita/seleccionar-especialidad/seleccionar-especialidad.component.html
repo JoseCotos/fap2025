@@ -1,0 +1,80 @@
+
+
+<section id="portfolio">
+    <div class="container" style="margin-top: 50px;">
+        <div class="row text-center" style="margin-bottom: -15px;">
+            <div style="width: 100%; ">
+                <form [formGroup]="seleccionarEspecialidadForm">
+                    
+                    <!-- opciones de progreso -->
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <img src="assets/img/fap/opc-2.png" style="width: 30%;">
+                        </div>
+                    </div>
+                    <br />
+
+                    <!-- Mostrar médico seleccionado -->
+                    <div class="row text-center">
+                        <div class="col-md-12" style="font-weight: bold;"> &lt; Médico reservado  </div>
+                        <div class="col-md-12"> {{ nomMedico }}  </div>
+                    </div>
+                    <br />
+
+                    <!-- Seleccion de especialidad -->
+                    <div class="row">
+                        <div class="col-md-12" style="font-weight: bold;">Especialidades disponibles</div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-md-4 offset-md-4">
+                            <select class="form-control form-select" formControlName="selEspecialidad" (change)="getEspecialidad($event)">
+                                <option *ngFor="let p of especialidades" value="{{ p.id_especialidad }}">{{ p.nombre }} </option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+
+                    <!-- Filtrado por fecha -->
+                    <div class="row text-center">
+                        <div class="col-md-12" style="font-weight: bold;"> Filtrar por fecha  </div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-md-2 offset-md-5">
+                            <select class="form-control form-select" formControlName="selDisponibilidadFecha" (change)="getDisponibilidadFecha($event)">
+                                <option *ngFor="let p of disponibilidad_fecha" value="{{ p.fecha }}">{{ p.fecha }} </option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+
+                    <!-- Seleccion horario -->
+                    <div class="row text-center">
+                        <div class="col-md-12" style="font-weight: bold;"> Seleccionar Horario  </div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-md-2 offset-md-5">
+                            <select class="form-control form-select" formControlName="selDisponibilidadHora" (change)="getDisponibilidadHora($event)">
+                                <option *ngFor="let p of disponibilidad_hora" value="{{ p.hora }}">{{ p.hora }} </option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+
+                    <!--   -->
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4 form-group text-center">
+                            <button (click)="btnAtraz()" class="btn btn-primary" type="submit" style="width: 50%;"> &lt;Atraz </button>
+                        </div>
+                        <div class="col-md-4 form-group text-center">
+                            <button (click)="btnContinuar()" class="btn btn-primary" type="submit" style="width: 50%;"> Continuar </button>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    
+                </form>
+                              
+            </div>
+        </div>
+    </div>
+</section>

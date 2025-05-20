@@ -1,0 +1,21 @@
+.btn-validar {
+  background-color: #f1b600;
+  color: white;
+  font-weight: bold;
+}
+
+.btn-validar:disabled {
+  background-color: #f1b600;
+  opacity: 0.6;
+  color: white;
+}
+
+.reenviar {
+  color: #f1b600;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.reenviar:hover {
+  text-decoration: underline;
+}

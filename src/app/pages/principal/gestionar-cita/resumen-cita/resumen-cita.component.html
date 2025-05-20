@@ -1,0 +1,65 @@
+
+
+<section id="portfolio">
+    <div class="container" style="margin-top: 50px;">
+        <div class="row text-center" style="margin-bottom: -15px;">
+            <div style="width: 100%; ">
+                <form [formGroup]="seleccionarEspecialidadForm">
+                    
+                    <!-- opciones de progreso -->
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <img src="assets/img/fap/opc-3.png" style="width: 30%;">
+                        </div>
+                    </div>
+                    <br />
+
+                    <!-- Mostrar médico reservado -->
+                    <div class="row text-center">
+                        <div class="col-md-12" style="font-weight: bold;"> &lt; Revisar resumen de tu cita  </div> <br /> <br />
+                        <div class="col-md-12" style="font-weight: bold;"> Médico reservado  </div>
+                        <div class="col-md-12"> {{ nomMedico }} </div>
+                    </div>
+                    <br />
+
+                    <!-- Mostrar especialidad reservado -->
+                    <div class="row text-center">
+                        <div class="col-md-12" style="font-weight: bold;"> Especialidad reservado  </div>
+                        <div class="col-md-12"> {{ nomEspecialidad }} </div>
+                    </div>
+                    <br />
+
+                    <!-- Mostrar fecha reservado -->
+                    <div class="row text-center">
+                        <div class="col-md-12" style="font-weight: bold;"> Fecha reservada  </div>
+                        <div class="col-md-12"> {{ disponibleFecha }} </div>
+                    </div>
+                    <br />
+
+                    <!-- Mostrar horario reservado -->
+                    <div class="row text-center">
+                        <div class="col-md-12" style="font-weight: bold;"> Fecha reservada  </div>
+                        <div class="col-md-12"> {{ disponibleHora }} </div>
+                    </div>
+                    <br />
+                    <br />
+
+                    <!--   -->
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4 form-group text-center">
+                            <button (click)="btnAtraz()" class="btn btn-primary" type="submit" style="width: 50%;"> &lt;Atraz </button>
+                        </div>
+                        <div class="col-md-4 form-group text-center">
+                            <button (click)="btnContinuar()" class="btn btn-primary" type="submit" style="width: 50%;"> Confirmar cita </button>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    
+                </form>
+                              
+            </div>
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,57 @@
+<div class="bg-white rounded-lg shadow-sm p-6 mb-8">
+    <h2 class="text-lg font-semibold text-gray-700 mb-4">Filtrar citas</h2>
+    <div class="flex flex-wrap gap-6">
+        <div class="flex flex-col" style="display: none;">
+            <label for="paciente" class="text-sm font-medium text-gray-600 mb-2">Paciente</label>
+            <select
+                id="paciente"
+                class="border border-gray-300 rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            >
+                <option value="todas">Todas las citas</option>
+            </select>
+        </div>
+        <div class="flex flex-col">
+            <label class="text-sm font-medium text-gray-600 mb-2">Filtro</label>
+            <div class="flex gap-3">
+                <button
+                    class="rounded-full px-4 py-2 text-sm font-medium transition duration-300 ease-in-out bg-indigo-100 text-indigo-600 border border-indigo-500 shadow-sm"
+                    onclick="seleccionarFiltro('todos')"
+                >
+                    Todos
+                </button>
+                <button
+                    class="rounded-full px-4 py-2 text-sm font-medium transition duration-300 ease-in-out bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300"
+                    onclick="seleccionarFiltro('presencial')"
+                >
+                    Presencial
+                </button>
+                <button
+                    class="rounded-full px-4 py-2 text-sm font-medium transition duration-300 ease-in-out bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300"
+                    onclick="seleccionarFiltro('virtual')"
+                >
+                    Virtual
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function seleccionarFiltro(filtro) {
+            // Remover la clase de selección de todos los botones
+            const botones = document.querySelectorAll('.flex.gap-3 button');
+            botones.forEach(boton => {
+                boton.classList.remove('bg-indigo-100', 'text-indigo-600', 'border-indigo-500', 'shadow-sm');
+                boton.classList.add('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200', 'border-gray-300');
+            });
+
+            // Agregar la clase de selección al botón clicado
+            const botonSeleccionado = document.querySelector(`.flex.gap-3 button:nth-child(${['todos', 'presencial', 'virtual'].indexOf(filtro) + 1})`);
+            if (botonSeleccionado) {
+                botonSeleccionado.classList.remove('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200', 'border-gray-300');
+                botonSeleccionado.classList.add('bg-indigo-100', 'text-indigo-600', 'border-indigo-500', 'shadow-sm');
+            }
+
+            // Aquí puedes agregar la lógica para filtrar las citas según el filtro seleccionado
+            console.log('Filtrar citas por:', filtro);
+        }
+    </script>
+</div>

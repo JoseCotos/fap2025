@@ -1,0 +1,21 @@
+<div class="sidebar" [ngClass]="{ 'collapsed': isCollapsed }">
+  <div class="mb-3">
+    <h4 class="text-warning fw-bold m-0 text-center" *ngIf="!isCollapsed">FAP</h4>
+    <div class="d-flex justify-content-center mt-2">
+      <button class="btn btn-sm btn-outline-light" (click)="toggleSidebar()">
+        <i class="fas fa-angle-double-left" *ngIf="!isCollapsed"></i>
+        <i class="fas fa-angle-double-right" *ngIf="isCollapsed"></i>
+      </button>
+    </div>
+  </div>
+
+  <ul class="nav flex-column">
+    <li class="nav-item" *ngFor="let item of menuItems">
+      <a [routerLink]="item.route" class="nav-link" [ngClass]="{ 'text-danger': item.isDanger, 'text-warning': item.isWarning }">
+        <i class="fas me-2" [ngClass]="item.icon"></i>
+        <span *ngIf="!isCollapsed">{{ item.label }}</span>
+      </a>
+    </li>
+  </ul>
+</div>
+
