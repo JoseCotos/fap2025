@@ -15,7 +15,7 @@ GO
 -- Tabla: usuario
 SET IDENTITY_INSERT usuario ON;
 INSERT INTO usuario (id_usuario, id_paciente, clave_hash, fecha_ultimo_acceso, activo) VALUES
-(1, 1, 'hash123ana', '2025-05-13',1),
+(1, 1, 'hash1C23ana', '2025-05-13',1),
 (2, 2, 'hash456juan', '2025-05-14',1);
 SET IDENTITY_INSERT usuario OFF;
 GO

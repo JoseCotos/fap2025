@@ -94,10 +94,10 @@ export class LoginComponent implements OnInit {
       this.intentosFallidos = parseInt(intentosGuardados, 10);
     }
 
-    if (cuentaBloqueadaStorage === 'true') {
+   /* if (cuentaBloqueadaStorage === 'true') {
       this.cuentaBloqueada = true;
       this.loginForm.disable();
-    }
+    }*/
 
     this.loginForm.get('tipo_documento')?.valueChanges.subscribe(tipo => {
       const numeroDoc = this.loginForm.get('numero_documento');
@@ -139,7 +139,7 @@ export class LoginComponent implements OnInit {
 
         /* console.log(rest.data[0]); */
         sessionStorage.setItem(LOGIN.ID_PACIENTE, rest.data[0].id_paciente);
-        sessionStorage.setItem(LOGIN.NOMBRE_USUARIO, rest.data[0].nombre + ' ' + rest.data[0].apellido);
+            sessionStorage.setItem(LOGIN.NOMBRE_USUARIO, rest.data[0].nombre + ' ' + rest.data[0].apellido);
 
         this.router.navigate(['/principal']);
       },

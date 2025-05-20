@@ -42,4 +42,19 @@ export class ProjectService {
     return this.http.post("https://yerwug2msl.execute-api.us-east-1.amazonaws.com/v1fap/fap_cita_post", data, {responseType: "json"})
   }
 
+obtenerPerfilPorPaciente(id_paciente: string) {
+  return this.http.get(
+    `https://yerwug2msl.execute-api.us-east-1.amazonaws.com/v1fap/usuario_perfil_get?id_paciente=${id_paciente}`,
+    { responseType: 'json' }
+  );
+}
+
+actualizarPerfilUsuario(data: any) {
+  return this.http.put(
+    "https://yerwug2msl.execute-api.us-east-1.amazonaws.com/v1fap/usuario_perfil_put",
+    data,
+    { responseType: 'json' }
+  );
+}
+
 }

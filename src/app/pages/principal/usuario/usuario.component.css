@@ -1,0 +1,9 @@
+input.ng-invalid.ng-touched,
+input.ng-invalid.ng-dirty {
+  border-color: #dc3545 !important;
+}
+
+input.ng-valid.ng-touched,
+input.ng-valid.ng-dirty {
+  border-color: #198754 !important;
+}
