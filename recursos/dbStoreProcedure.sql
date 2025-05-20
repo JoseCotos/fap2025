@@ -97,19 +97,20 @@ as
 
     SET @id_cita = SCOPE_IDENTITY()
 go
-
-
-
-
-
-
-
-
-
 /*
-    Faltan verificar
+exec usp_insertar_cita 0,1,1,'19/05/2025','12:00','RESERVADO','.......';
 */
 
+create procedure usp_ListarEspecialidades
+as
+	SELECT 	p.id_especialidad,
+			p.nombre,
+			p.descripcion
+	FROM especialidad_medica p
+go
+/*
+exec usp_ListarEspecialidades;
+*/
 create procedure usp_ListarMedicos_x_Especilidad
 (
     @id_especialidad int
@@ -123,14 +124,17 @@ as
 	FROM medico p
     WHERE P.id_especialidad = @id_especialidad
 go
+/*
+exec usp_ListarMedicos_x_Especilidad 1;
+*/
 
-create procedure usp_ListarEspecialidad
-as
-	SELECT 	p.id_especialidad,
-			p.nombre,
-			p.descripcion
-	FROM especialidad_medica p
-go
+
+
+
+/*
+    Faltan verificar
+*/
+
 
 
 create procedure usp_cancelarCita

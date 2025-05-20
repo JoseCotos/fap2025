@@ -14,19 +14,19 @@
 
                     <!-- Mostrar médico seleccionado -->
                     <div class="row text-center">
-                        <div class="col-md-12" style="font-weight: bold;"> &lt; Médico reservado  </div>
-                        <div class="col-md-12"> {{ nomMedico }}  </div>
+                        <div class="col-md-12" style="font-weight: bold;"> &lt; Especialidad reservada </div>
+                        <div class="col-md-12"> {{ nomEspecialidad }}  </div>
                     </div>
                     <br />
 
                     <!-- Seleccion de especialidad -->
                     <div class="row">
-                        <div class="col-md-12" style="font-weight: bold;">Especialidades disponibles</div>
+                        <div class="col-md-12" style="font-weight: bold;">Medicos disponibles</div>
                     </div>
                     <div class="row text-center">
                         <div class="col-md-4 offset-md-4">
-                            <select class="form-control form-select" formControlName="selEspecialidad" (change)="getEspecialidad($event)">
-                                <option *ngFor="let p of especialidades" value="{{ p.id_especialidad }}">{{ p.nombre }} </option>
+                            <select class="form-control form-select" formControlName="selMedico" (change)="getMedico($event)">
+                                <option *ngFor="let p of medicos" value="{{ p.id_medico }}">{{ p.nombre }} {{ p.apellido }} </option>
                             </select>
                         </div>
                     </div>

@@ -43,7 +43,12 @@ export class GestionarCitaComponent {
   }
 
   seleccionarEspecialidad(){
-
+    if (this.tipoCitaMedica && this.tipoGestion){
+      sessionStorage.setItem(CITA.TIPO_CITA, this.tipoCitaMedica);
+      this.router.navigate(['./reservar-especialidad']);
+    } else {
+      alert ('Seleccione la opción Reservar Cita y/o Tipo de cita')
+    }
   }
 
   seleccionarLaboratorio(){

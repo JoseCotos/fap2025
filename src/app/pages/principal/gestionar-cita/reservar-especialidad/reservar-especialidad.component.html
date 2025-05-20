@@ -14,10 +14,10 @@
 
                     <!-- Opciones de búsqueda -->
                     <div class="row text-center">
-                        <div class="col-md-12" style="font-weight: bold;"> &lt; Reservar por médico  </div> <br /><br />
+                        <div class="col-md-12" style="font-weight: bold;"> &lt; Reservar por Especialidad  </div> <br /><br />
                         <div class="col-md-6 col offset-md-3">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" formControlName="txtMedico" placeholder="Ingrese nombre del médico">
+                                <input type="text" class="form-control" formControlName="txtEspecialidad" placeholder="Ingrese nombre de la especialidad">
                                 <div class="input-group-append">
                                   <span class="input-group-text" id="basic-addon2"> <a routerLink="/reservar-medico"> Buscar </a></span>
                                 </div>
@@ -29,12 +29,12 @@
 
                     <!-- Seleccion médicos disponibles -->
                     <div class="row text-center">
-                        <div class="col-md-12" style="font-weight: bold;">Médicos disponibles</div>
+                        <div class="col-md-12" style="font-weight: bold;">Especialidades disponibles</div>
                     </div>
                     <div class="row text-center">
                         <div class="col-md-4 offset-md-4">
-                            <select class="form-control form-select" formControlName="selMedico" (change)="getMedico($event)">
-                                <option *ngFor="let p of medicos" value="{{ p.id_medico }}">{{ p.nombre }} {{ p.apellido }} </option>
+                            <select class="form-control form-select" formControlName="selEspecialidad" (change)="getEspecialidad($event)">
+                                <option *ngFor="let p of especialidades" value="{{ p.id_especialidad }}">{{ p.nombre }}</option>
                             </select>
                         </div>
                     </div>

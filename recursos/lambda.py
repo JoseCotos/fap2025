@@ -234,6 +234,104 @@ import json
 import pyodbc
 
 def lambda_handler(event,context):
+    try:
+    
+        conn = pyodbc.connect("Driver={ODBC Driver 18 for SQL Server};"
+                        "Server=upc-dbweb.cyphf9v7gxq3.us-east-1.rds.amazonaws.com;"
+                        "Database=DBFAP;"
+                        "UID=admin;"
+                        "PWD=$Jacc.78;")
+        
+        cursor = conn.cursor()
+
+        id_cita = event.get('id_cita')
+        id_paciente = event.get('id_paciente')
+        id_medico = event.get('id_medico')
+        fecha = event.get('fecha')
+        hora = event.get('hora')
+        estado = event.get('estado')
+        motivo = event.get('motivo')
+        
+        print('llego : '+id_cita+id_paciente+id_medico+fecha+hora+estado+motivo)
+
+        
+        if not all([id_cita, id_paciente, id_medico, fecha, hora, estado, motivo]):
+            return {
+                'statusCode': 400,
+                'body': json.dumps({'msg': 'Faltan campos requeridos'})
+            }
+
+
+        params = (id_cita, id_paciente, id_medico, fecha, hora, estado, motivo)
+
+        cursor.execute('exec usp_insertar_cita @ID_CITA=?, @ID_PACIENTE=?, @ID_MEDICO=?, @FECHA=?, @HORA=?, @ESTADO=?, @MOTIVO=?',params)
+        conn.commit()
+
+        return {
+            'statusCode': 200,
+            'body': json.dumps({'msg': 'Registro creado correctamente'})
+        }
+    except Exception as e:
+        return {
+            #'msg': 'Error al registrar los datos'
+            #'msg': str(id_cita) + ' - ' + str(id_paciente) + ' - ' + str(id_medico) + ' - ' + str(fecha) + ' - ' + str(hora) + ' - ' + str(estado) + ' - ' + str(motivo)
+            
+            'statusCode': 500,
+            'body': json.dumps({'error': str(e)})
+        }
+
+    finally:
+        try:
+            cursor.close()
+            conn.close()
+        except:
+            pass
+
+
+""" ====================== """
+""" fap_especialidades_get """
+""" ====================== """
+
+import json
+import pyodbc 
+
+def lambda_handler(event,context):
+    conn = pyodbc.connect("Driver={ODBC Driver 18 for SQL Server};"
+                      "Server=upc-dbweb.cyphf9v7gxq3.us-east-1.rds.amazonaws.com;"
+                      "Database=DBFAP;"
+                      "UID=admin;"
+                      "PWD=$Jacc.78;")
+    
+    cursor = conn.cursor()
+    try:        
+        cursor.execute('exec usp_ListarEspecialidades')
+        
+        data = []
+
+        for row in cursor:
+            data.append({"id_especialidad":row[0], "nombre": row[1],"descripcion":row[2] })
+
+        return {
+            'data': data
+        }
+    except:
+        return {
+            'error': 'Error al obtener los datos'
+        }
+
+    finally:
+        cursor.close()
+        conn.close()
+
+
+""" ==================== """
+""" fap_medico_get """
+""" ==================== """
+
+import json
+import pyodbc 
+
+def lambda_handler(event,context):
     conn = pyodbc.connect("Driver={ODBC Driver 18 for SQL Server};"
                       "Server=upc-dbweb.cyphf9v7gxq3.us-east-1.rds.amazonaws.com;"
                       "Database=DBFAP;"
@@ -242,25 +340,22 @@ def lambda_handler(event,context):
     
     cursor = conn.cursor()
     try:
-        id_cita = event.get('id_cita')
-        id_paciente = event.get('id_paciente')
-        id_medico = event.get('id_medico')
-        fecha = event.get('fecha')
-        hora = event.get('hora')
-        estado = event.get('estado')
-        motivo = event.get('motivo')
+        id_especialidad = event.get('id_especialidad')
+        params = (id_especialidad)
 
-        params = (id_cita, id_paciente, id_medico, fecha, hora, estado, motivo)
+        cursor.execute('exec usp_ListarMedicos_x_Especilidad @ID_ESPECIALIDAD=?',params)
+        
+        data = []
 
-        cursor.execute('exec usp_insertar_cita @ID_CITA=?, @ID_PACIENTE=?, @ID_MEDICO=?, @FECHA=?, @HORA=?, @ESTADO=?, @MOTIVO=?',params)
-        conn.commit()
+        for row in cursor:
+            data.append({"id_medico":row[0], "nombre": row[1],"apellido":row[2] })
 
         return {
-            'msg': 'Registro creado correctamente'
+            'data': data
         }
     except:
         return {
-            'msg': 'Error al registrar los datos'
+            'error': 'Error al obtener los datos'
         }
 
     finally:
@@ -272,13 +367,6 @@ def lambda_handler(event,context):
 
     En plantilla de asignación colocar: application/json
 {
-    "id_cita": "$input.params('id_cita')",
-    "id_paciente": "$input.params('id_paciente')",
-    "id_medico": "$input.params('id_medico')",
-    "fecha": "$input.params('fecha')",
-    "hora": "$input.params('hora')",
-    "estado": "$input.params('estado')",
-    "motivo": "$input.params('motivo')"
+    "id_especialidad": "$input.params('id_especialidad')"
 }
 """
-

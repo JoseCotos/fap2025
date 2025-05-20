@@ -18,8 +18,16 @@ export class ProjectService {
     return this.http.get("https://yerwug2msl.execute-api.us-east-1.amazonaws.com/v1fap/medicos",{responseType: "json"})
   }
 
+  listar_especialidades(){
+    return this.http.get("https://yerwug2msl.execute-api.us-east-1.amazonaws.com/v1fap/especialidades_get",{responseType: "json"})
+  }
+
   listar_especialidad_por_medico(param: string){
     return this.http.get("https://yerwug2msl.execute-api.us-east-1.amazonaws.com/v1fap/especialidad?id_medico=" + param, {responseType: "json"})
+  }
+
+  listar_medico_por_especialidad(param: string){
+    return this.http.get("https://yerwug2msl.execute-api.us-east-1.amazonaws.com/v1fap/medico?id_especialidad=" + param, {responseType: "json"})
   }
 
   listar_disponibilidad_fecha(param: string){
@@ -33,13 +41,5 @@ export class ProjectService {
   insertar_cita_medica(data: any){
     return this.http.post("https://yerwug2msl.execute-api.us-east-1.amazonaws.com/v1fap/fap_cita_post", data, {responseType: "json"})
   }
-
-/*   insertar_cita_medica22(data: any) {
-  return this.http.post('https://yerwug2msl.execute-api.us-east-1.amazonaws.com/v1fap/fap_cita_post', data, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }); 
-} */
 
 }
