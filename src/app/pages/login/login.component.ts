@@ -94,10 +94,10 @@ export class LoginComponent implements OnInit {
       this.intentosFallidos = parseInt(intentosGuardados, 10);
     }
 
-    if (cuentaBloqueadaStorage === 'true') {
+/*     if (cuentaBloqueadaStorage === 'true') {
       this.cuentaBloqueada = true;
       this.loginForm.disable();
-    }
+    } */
 
     this.loginForm.get('tipo_documento')?.valueChanges.subscribe(tipo => {
       const numeroDoc = this.loginForm.get('numero_documento');
