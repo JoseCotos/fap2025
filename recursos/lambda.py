@@ -224,3 +224,46 @@ def lambda_handler(event,context):
     "fecha": "$input.params('fecha')"
 }
 """
+
+
+""" ============= """
+""" fap_cita_post """
+""" ============= """
+
+import json
+import pyodbc
+
+def lambda_handler(event,context):
+    conn = pyodbc.connect("Driver={ODBC Driver 18 for SQL Server};"
+                      "Server=upc-dbweb.cyphf9v7gxq3.us-east-1.rds.amazonaws.com;"
+                      "Database=DBFAP;"
+                      "UID=admin;"
+                      "PWD=$Jacc.78;")
+    
+    cursor = conn.cursor()
+    try:
+        id_cita = event.get('id_cita')
+        id_paciente = event.get('id_paciente')
+        id_medico = event.get('id_medico')
+        fecha = event.get('fecha')
+        hora = event.get('hora')
+        estado = event.get('estado')
+        motivo_consulta = event.get('motivo_consulta')
+
+        params = (id_cita, id_paciente, id_medico, fecha, hora, estado, motivo_consulta)
+
+        cursor.execute('exec usp_insertar_cita @ID_CITA=?, @ID_PACIENTE=?, @ID_MEDICO=?, @FECHA=?, @HORA=?, @ESTADO=?, @MOTIVO_CONSULTA=?',params)
+
+
+        return {
+            'msg': 'Registro creado correctamente'
+        }
+    except:
+        return {
+            'msg': 'Error al registrar los datos'
+        }
+
+    finally:
+        cursor.close()
+        conn.close()
+

@@ -81,6 +81,24 @@ go
 exec usp_ListarHoraDisponible_Fecha_Medico 1, '16/05/2025'
 */
 
+create procedure usp_insertar_cita
+(
+    @id_cita int OUTPUT,
+    @id_paciente int,
+    @id_medico int,
+    @fecha varchar(10),
+    @hora varchar(10),
+    @estado varchar(20),
+    @motivo_consulta varchar(200)    
+)
+as
+    INSERT INTO cita_medica(id_paciente,id_medico,fecha,hora,estado,motivo_consulta)
+    VALUES(@id_paciente,@id_medico,CONVERT(DATE, @fecha, 103),@hora,@estado,@motivo_consulta)
+
+    SET @id_cita = SCOPE_IDENTITY()
+go
+
+
 
 
 
@@ -126,22 +144,7 @@ as
     WHERE id_cita = @id_cita
 go
 
-create procedure usp_insertar_cita
-(
-    @id_cita int OUTPUT,
-    @id_paciente int,
-    @id_medico int,
-    @fecha date,
-    @hora varchar(10),
-    @estado varchar(20),
-    @motivo_consulta varchar(200)    
-)
-as
-    INSERT INTO cita_medica(id_paciente,id_medico,fecha,hora,estado,motivo_consulta)
-    VALUES(@id_paciente,@id_medico,@fecha,@hora,@estado,@motivo_consulta)
 
-    SET @id_cita = SCOPE_IDENTITY()
-go
 
 /* Previamente se tiene que llamar a cancelarCita y NuevaCita */
 create procedure usp_insertar_ReprogramarCita

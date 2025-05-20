@@ -16,3 +16,8 @@ export const CITA = {
     NOMBRE_MEDICO: 'nombreMedico',
     NOMBRE_ESPECIALIDAD: 'nombreEspecialidad'
 }
+
+export const ESTADO_CITA = {
+    CONFIRMADO: 'CONFIRMADO',
+    RESERVADO: 'RESERVADO'
+}

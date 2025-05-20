@@ -32,6 +32,8 @@ export class ResumenCitaComponent {
     this.nomEspecialidad = nEsp ? nEsp : '';
     this.disponibleFecha = dFec ? dFec : '';
     this.disponibleHora = dHor ? dHor : '';
+
+    console.log(sessionStorage);
   }
 
   seleccionarEspecialidadForm = this.fb.group({
